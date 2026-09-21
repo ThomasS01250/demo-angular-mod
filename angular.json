@@ -30,7 +30,7 @@
             ],
             "styles": [
               "node_modules/wcs-core/dist/wcs/wcs.css",
-              "node_modules/wcs-core/design-tokens/dist/sncf-voyageurs.css",
+              "node_modules/wcs-core/design-tokens/dist/sncf-holding.css",
               "src/styles.css"
             ],
             "scripts": []

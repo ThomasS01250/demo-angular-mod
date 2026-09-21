@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'SNCF Voyageurs - Démo Migration Copilot';
+  title = 'SNCF - Démo Migration Copilot';
 }
