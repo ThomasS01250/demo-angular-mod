@@ -288,20 +288,19 @@ Supprime complètement le Subject destroy$, takeUntil et ngOnDestroy, car ils so
 Migrer la syntaxe des templates Angular de `*ngIf` / `*ngFor` vers `@if` / `@for` / `@empty`.
 
 ### Action dans IntelliJ :
-1. Ouvrez `src/app/components/train-list/train-list.component.html`.
-2. Ouvrez le chat ou sélectionnez le fichier entier pour Inline Edit (`Ctrl + \`).
+1. Ouvrez `src/app/components/train-list/train-list.component.ts`.
+2. Sélectionnez la propriété `template:` (ou lancez Inline Edit `Ctrl + \` sur le composant).
 
 ### 💬 Prompt :
 ```text
-Migre ce template HTML vers la nouvelle syntaxe de Control Flow intégrée d'Angular (@if, @else, @for, @empty).
+Migre le template inline de ce composant vers la nouvelle syntaxe de Control Flow native d'Angular (@if, @else, @for, @empty).
 Puisque le composant utilise désormais des Signals, appelle 'trains()' et 'isLoading()'.
 Utilise 'track train.id' pour le bloc @for.
-Préserve scrupuleusement tous les composants WCS SNCF (<wcs-card>, <wcs-button>, <wcs-badge>, <wcs-spinner>) et leurs attributs.
+Préserve scrupuleusement tous les composants WCS SNCF (<wcs-card>, <wcs-button>, <wcs-badge>, <wcs-spinner>) et leurs styles inline.
 ```
 
 ### Ce que vous dites à voix haute :
-> *"Angular a introduit un moteur de template beaucoup plus clair et performant. Fini le `*ngIf` avec des balises `<ng-template #elseBlock>`, fini le `*ngFor` avec son pipe async.
-> Regardez comme le template devient élégant avec `@if`, `@for` et le bloc `@empty` natif qui gère le cas où aucun train n'est disponible !"*
+> *"Comme nos composants sont en mono-fichier (Single File Component), Copilot a sous les yeux la logique TypeScript, les styles et le template en même temps ! Regardez comme le template devient concis et élégant avec `@if`, `@for` et le bloc `@empty` natif."*
 
 ### Résultat attendu :
 ```html
@@ -343,7 +342,7 @@ Préserve scrupuleusement tous les composants WCS SNCF (<wcs-card>, <wcs-button>
 3. Montrez la qualité des assertions (`expect(service.totalSeatsAvailable()).toBe(...)`).
 
 ### Option B : Complétion inline en temps réel d'un nouveau Web Component WCS
-1. Dans `train-list.component.html`, juste sous le prix, commencez à taper :
+1. Dans `train-list.component.ts`, directement dans le template inline juste sous le prix, commencez à taper :
    ```html
    <!-- Afficher une alerte si moins de 5 places -->
    ```
