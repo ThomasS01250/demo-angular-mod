@@ -79,10 +79,10 @@ Montrer la capacité de Copilot à analyser les dépendances dans `package.json`
 ### 💬 Prompt à saisir dans Copilot Chat :
 ```text
 Voici le fichier package.json d'une application Angular qui utilise les Web Components SNCF (wcs-core).
-Je souhaite faire monter ce projet en version vers la version stable d'Angular 17 (ou 18).
+Je souhaite faire monter ce projet vers la version stable d'Angular 17 (ou 18).
 
 Analyse les dépendances actuelles et génère :
-1. Un script PowerShell et un script Bash automatisé pour effectuer la migration étape par étape (commandes 'ng update' et 'npm install').
+1. Les commandes PowerShell à exécuter dans le terminal d'IntelliJ pour effectuer la migration étape par étape ('ng update' et 'npm install').
 2. La liste des points d'attention (compatibilité TypeScript, Node.js, RxJS et wcs-core).
 3. Les flags recommandés (par exemple --force si nécessaire pour les peer-dependencies).
 ```
