@@ -27,35 +27,18 @@ import { TrainService } from '../../services/train.service';
           />
         </div>
 
-        <div class="button-group">
-          <button
-            type="button"
-            class="filter-pill"
-            [class.active]="selectedType === 'ALL'"
-            (click)="onTypeChange('ALL')">
-            Tous
-          </button>
-          <button
-            type="button"
-            class="filter-pill"
-            [class.active]="selectedType === 'TGV INOUI'"
-            (click)="onTypeChange('TGV INOUI')">
-            TGV INOUI
-          </button>
-          <button
-            type="button"
-            class="filter-pill"
-            [class.active]="selectedType === 'OUIGO'"
-            (click)="onTypeChange('OUIGO')">
-            OUIGO
-          </button>
-          <button
-            type="button"
-            class="filter-pill"
-            [class.active]="selectedType === 'TER'"
-            (click)="onTypeChange('TER')">
-            TER
-          </button>
+        <div class="radio-filter-group">
+          <label class="filter-label">Type de train :</label>
+          <wcs-radio-group
+            name="train-type-filter"
+            mode="option"
+            [value]="selectedType"
+            (wcsChange)="onTypeChange($event)">
+            <wcs-radio label="Tous" value="ALL"></wcs-radio>
+            <wcs-radio label="TGV INOUI" value="TGV INOUI"></wcs-radio>
+            <wcs-radio label="OUIGO" value="OUIGO"></wcs-radio>
+            <wcs-radio label="TER" value="TER"></wcs-radio>
+          </wcs-radio-group>
         </div>
 
         <div class="actions-group">
@@ -99,7 +82,7 @@ import { TrainService } from '../../services/train.service';
     .filter-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 20px;
       align-items: flex-end;
     }
 
@@ -111,7 +94,7 @@ import { TrainService } from '../../services/train.service';
       gap: 6px;
     }
 
-    .input-group label {
+    .input-group label, .filter-label {
       font-size: 0.85rem;
       font-weight: 500;
       color: #475569;
@@ -130,32 +113,10 @@ import { TrainService } from '../../services/train.service';
       box-shadow: 0 0 0 2px rgba(0, 136, 206, 0.15);
     }
 
-    .button-group {
+    .radio-filter-group {
       display: flex;
-      gap: 8px;
-    }
-
-    .filter-pill {
-      padding: 8px 14px;
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #475569;
-      transition: all 0.2s;
-    }
-
-    .filter-pill:hover {
-      border-color: #0088ce;
-      color: #0088ce;
-    }
-
-    .filter-pill.active {
-      background: #0088ce;
-      color: #ffffff;
-      border-color: #0088ce;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .actions-group {
@@ -193,9 +154,10 @@ export class TrainFilterComponent implements OnInit, OnDestroy {
     this.trainService.setSearchQuery(value);
   }
 
-  onTypeChange(type: string): void {
-    this.selectedType = type;
-    this.trainService.setFilterType(type);
+  onTypeChange(event: any): void {
+    const value = typeof event === 'string' ? event : (event?.detail?.value ?? 'ALL');
+    this.selectedType = value;
+    this.trainService.setFilterType(value);
   }
 
   resetFilters(): void {
