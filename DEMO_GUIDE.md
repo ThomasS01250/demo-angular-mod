@@ -110,7 +110,7 @@ npm install wcs-core@latest
 ## 🧩 Acte 2 : Migration vers les Standalone Components & Web Components WCS (6 min)
 
 ### Objectif :
-Supprimer `AppModule` et migrer `TrainListComponent`, `TrainFilterComponent` et `AppComponent` en standalone components, avec la déclaration de `CUSTOM_ELEMENTS_SCHEMA` pour que les balises `<wcs-*>` restent valides.
+Supprimer `AppModule` et migrer `TrainListComponent`, `TrainFilterComponent` et `AppComponent` en standalone components, en important directement `WcsAngularModule` (conformément à la documentation officielle SNCF WCS).
 
 ### Étape 2.1 : Migration de TrainListComponent
 1. Ouvrez `src/app/components/train-list/train-list.component.ts`.
@@ -120,19 +120,25 @@ Supprimer `AppModule` et migrer `TrainListComponent`, `TrainFilterComponent` et 
 ### 💬 Prompt Inline :
 ```text
 Migre ce composant en Standalone Component Angular.
-Inclus CommonModule dans les imports, ainsi que CUSTOM_ELEMENTS_SCHEMA dans les schemas pour supporter les balises web components SNCF <wcs-*>.
+Importe CommonModule et WcsAngularModule depuis 'wcs-angular' pour le support officiel des composants SNCF.
 ```
 
 ### Ce que vous dites à voix haute :
-> *"Ici, une erreur classique lors de la migration standalone avec des web components tiers comme le design system WCS de la SNCF est d'oublier de reporter le `CUSTOM_ELEMENTS_SCHEMA` depuis le module parent vers le composant standalone lui-même. Voyons comment Copilot gère cela."*
+> *"Selon la documentation officielle de la SNCF (wcs.dev.sncf), pour utiliser les composants WCS dans une architecture Angular Standalone, il suffit d'importer `WcsAngularModule` dans le tableau `imports` de chaque composant autonome. Voyons comment Copilot s'en charge."*
 
 ### Résultat attendu dans le diff IntelliJ :
 ```typescript
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { WcsAngularModule } from 'wcs-angular';
+import { Observable } from 'rxjs';
+import { Train } from '../../models/train.model';
+import { TrainService } from '../../services/train.service';
+
 @Component({
   selector: 'app-train-list',
   standalone: true,
-  imports: [CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, WcsAngularModule],
   templateUrl: './train-list.component.html',
   styleUrls: ['./train-list.component.css']
 })
@@ -144,9 +150,9 @@ export class TrainListComponent implements OnInit { ... }
 
 ### Étape 2.2 : Migration de TrainFilterComponent & AppComponent
 1. Ouvrez `src/app/components/train-filter/train-filter.component.ts`.
-2. Ouvrez le chat ou inline prompt :
+2. Ouvrez le chat ou inline prompt (`Ctrl + \`) :
    ```text
-   Rends ce composant standalone: true, importe FormsModule et CommonModule, et ajoute CUSTOM_ELEMENTS_SCHEMA.
+   Rends ce composant standalone: true en important FormsModule, CommonModule et WcsAngularModule.
    ```
 3. Ouvrez `src/app/app.component.ts` et demandez :
    ```text
@@ -157,24 +163,28 @@ export class TrainListComponent implements OnInit { ... }
 
 ### Étape 2.3 : Modernisation du bootstrap dans `src/main.ts`
 1. Ouvrez `src/main.ts`.
-2. Sélectionnez le code existant (`platformBrowserDynamic().bootstrapModule(AppModule)`).
+2. Sélectionnez le bootstrap existant.
 3. Dans Copilot Inline Chat (`Ctrl + \`) :
 
 ### 💬 Prompt :
 ```text
-Remplace le bootstrap basé sur AppModule par 'bootstrapApplication(AppComponent)' pour une architecture Angular Standalone moderne.
+Remplace le bootstrap basé sur AppModule par 'bootstrapApplication(AppComponent)' tout en conservant 'defineCustomElements()' de wcs-core/loader.
 ```
 
 ### Résultat attendu :
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
+import { defineCustomElements } from 'wcs-core/loader';
 import { AppComponent } from './app/app.component';
+
+// Enregistrement des Custom Elements SNCF WCS
+defineCustomElements();
 
 bootstrapApplication(AppComponent).catch(err => console.error(err));
 ```
 
 ### Ce que vous dites à voix haute :
-> *"Nous venons de supprimer le besoin d'avoir `app.module.ts`. On peut même demander à IntelliJ de supprimer `app.module.ts` ou archiver le fichier. Notre application est désormais 100% Standalone, plus légère et conforme aux standards récents d'Angular."*
+> *"Nous venons de supprimer le besoin d'avoir `app.module.ts`. Notre application est désormais 100% Standalone, suit scrupuleusement la documentation officielle SNCF WCS avec `defineCustomElements()` et `WcsAngularModule`, et respecte les bonnes pratiques actuelles d'Angular."*
 
 ---
 

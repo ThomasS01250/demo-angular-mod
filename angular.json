@@ -29,6 +29,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/wcs-core/dist/wcs/wcs.css",
+              "node_modules/wcs-core/design-tokens/dist/sncf-voyageurs.css",
               "src/styles.css"
             ],
             "scripts": []

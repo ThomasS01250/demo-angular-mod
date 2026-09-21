@@ -1,6 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { WcsAngularModule } from 'wcs-angular';
 
 import { AppComponent } from './app.component';
 import { TrainListComponent } from './components/train-list/train-list.component';
@@ -14,10 +15,10 @@ import { TrainFilterComponent } from './components/train-filter/train-filter.com
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    WcsAngularModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
