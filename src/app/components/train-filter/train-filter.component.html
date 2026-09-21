@@ -1,0 +1,59 @@
+<div class="filter-card">
+  <div class="filter-header">
+    <h3>Recherche & Filtres</h3>
+    <span class="seat-counter">
+      Places disponibles : <strong>{{ totalSeats }}</strong>
+    </span>
+  </div>
+
+  <div class="filter-row">
+    <div class="input-group">
+      <label for="search-input">Rechercher une destination ou un numéro de train :</label>
+      <input
+        id="search-input"
+        type="text"
+        class="native-search-input"
+        placeholder="Ex: Lyon, Bordeaux, TGV 6612..."
+        [value]="searchTerm"
+        (input)="onSearchInput($event)"
+      />
+    </div>
+
+    <div class="button-group">
+      <button
+        type="button"
+        class="filter-pill"
+        [class.active]="selectedType === 'ALL'"
+        (click)="onTypeChange('ALL')">
+        Tous
+      </button>
+      <button
+        type="button"
+        class="filter-pill"
+        [class.active]="selectedType === 'TGV INOUI'"
+        (click)="onTypeChange('TGV INOUI')">
+        TGV INOUI
+      </button>
+      <button
+        type="button"
+        class="filter-pill"
+        [class.active]="selectedType === 'OUIGO'"
+        (click)="onTypeChange('OUIGO')">
+        OUIGO
+      </button>
+      <button
+        type="button"
+        class="filter-pill"
+        [class.active]="selectedType === 'TER'"
+        (click)="onTypeChange('TER')">
+        TER
+      </button>
+    </div>
+
+    <div class="actions-group">
+      <wcs-button mode="stroked" shape="round" size="s" (click)="resetFilters()">
+        Réinitialiser
+      </wcs-button>
+    </div>
+  </div>
+</div>
