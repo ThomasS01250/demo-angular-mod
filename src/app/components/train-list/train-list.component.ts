@@ -26,50 +26,52 @@ import { TrainService } from '../../services/train.service';
           <div *ngFor="let train of trains$ | async" class="train-item">
             <wcs-card mode="raised">
               <wcs-card-body>
-                <wcs-card-header>
-                  <div slot="badges">
-                    <wcs-badge shape="rounded" [class]="'badge-type-' + getBadgeSlug(train.type)">
-                      {{ train.type }}
-                    </wcs-badge>
-                  </div>
-                  {{ train.trainNumber }}
-                  <div slot="actions">
-                    <wcs-badge *ngIf="train.status === 'ON_TIME'" shape="rounded" class="status-badge on-time">À l'heure</wcs-badge>
-                    <wcs-badge *ngIf="train.status === 'DELAYED'" shape="rounded" class="status-badge delayed">+{{ train.delayMinutes }} min</wcs-badge>
-                    <wcs-badge *ngIf="train.status === 'CANCELLED'" shape="rounded" class="status-badge cancelled">Supprimé</wcs-badge>
-                  </div>
-                </wcs-card-header>
+                <div class="train-card-content">
+                  <wcs-card-header>
+                    <div slot="badges">
+                      <wcs-badge shape="rounded" [class]="'badge-type-' + getBadgeSlug(train.type)">
+                        {{ train.type }}
+                      </wcs-badge>
+                    </div>
+                    {{ train.trainNumber }}
+                    <div slot="actions">
+                      <wcs-badge *ngIf="train.status === 'ON_TIME'" shape="rounded" class="status-badge on-time">À l'heure</wcs-badge>
+                      <wcs-badge *ngIf="train.status === 'DELAYED'" shape="rounded" class="status-badge delayed">+{{ train.delayMinutes }} min</wcs-badge>
+                      <wcs-badge *ngIf="train.status === 'CANCELLED'" shape="rounded" class="status-badge cancelled">Supprimé</wcs-badge>
+                    </div>
+                  </wcs-card-header>
 
-                <div class="journey-route">
-                  <div class="station departure">
-                    <span class="time">{{ train.departureTime }}</span>
-                    <span class="name">{{ train.departureStation }}</span>
+                  <div class="journey-route">
+                    <div class="station departure">
+                      <span class="time">{{ train.departureTime }}</span>
+                      <span class="name">{{ train.departureStation }}</span>
+                    </div>
+                    <div class="journey-divider">
+                      <wcs-divider></wcs-divider>
+                    </div>
+                    <div class="station arrival">
+                      <span class="time">{{ train.arrivalTime }}</span>
+                      <span class="name">{{ train.arrivalStation }}</span>
+                    </div>
                   </div>
-                  <div class="journey-divider">
-                    <wcs-divider></wcs-divider>
-                  </div>
-                  <div class="station arrival">
-                    <span class="time">{{ train.arrivalTime }}</span>
-                    <span class="name">{{ train.arrivalStation }}</span>
-                  </div>
+
+                  <wcs-card-footer>
+                    <div class="seats-info">
+                      <span [class.text-danger]="train.availableSeats <= 5">
+                        {{ train.availableSeats }} place(s) restante(s)
+                      </span>
+                    </div>
+                    <div class="price-action">
+                      <span class="price">{{ train.price }} €</span>
+                      <wcs-button
+                        [disabled]="train.availableSeats === 0 || train.status === 'CANCELLED'"
+                        size="m"
+                        (click)="onBook(train)">
+                        {{ train.availableSeats === 0 ? 'Complet' : 'Réserver' }}
+                      </wcs-button>
+                    </div>
+                  </wcs-card-footer>
                 </div>
-
-                <wcs-card-footer>
-                  <div class="seats-info">
-                    <span [class.text-danger]="train.availableSeats <= 5">
-                      {{ train.availableSeats }} place(s) restante(s)
-                    </span>
-                  </div>
-                  <div class="price-action">
-                    <span class="price">{{ train.price }} €</span>
-                    <wcs-button
-                      [disabled]="train.availableSeats === 0 || train.status === 'CANCELLED'"
-                      size="m"
-                      (click)="onBook(train)">
-                      {{ train.availableSeats === 0 ? 'Complet' : 'Réserver' }}
-                    </wcs-button>
-                  </div>
-                </wcs-card-footer>
               </wcs-card-body>
             </wcs-card>
           </div>
@@ -102,6 +104,13 @@ import { TrainService } from '../../services/train.service';
     }
 
     .train-cards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .train-card-content {
+      padding: 20px 24px;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -144,7 +153,7 @@ import { TrainService } from '../../services/train.service';
       background-color: #f8fafc;
       padding: 16px 20px;
       border-radius: 8px;
-      margin: 12px 0;
+      margin: 4px 0;
     }
 
     .station {

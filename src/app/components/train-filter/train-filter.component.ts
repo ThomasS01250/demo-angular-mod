@@ -8,44 +8,46 @@ import { TrainService } from '../../services/train.service';
   template: `
     <wcs-card mode="raised" class="filter-card">
       <wcs-card-body>
-        <div class="filter-header">
-          <h3>Recherche & Filtres</h3>
-          <wcs-badge shape="rounded" class="seat-badge">
-            Places disponibles : <strong>{{ totalSeats }}</strong>
-          </wcs-badge>
-        </div>
-
-        <div class="filter-row">
-          <div class="input-container">
-            <wcs-form-field>
-              <wcs-label>Rechercher une destination ou un numéro de train :</wcs-label>
-              <wcs-input
-                icon="search"
-                placeholder="Ex: Lyon, Bordeaux, TGV 6612..."
-                [value]="searchTerm"
-                (wcsInput)="onSearchInput($event)">
-              </wcs-input>
-            </wcs-form-field>
+        <div class="filter-card-content">
+          <div class="filter-header">
+            <h3>Recherche & Filtres</h3>
+            <wcs-badge shape="rounded" class="seat-badge">
+              Places disponibles : <strong>{{ totalSeats }}</strong>
+            </wcs-badge>
           </div>
 
-          <div class="radio-filter-group">
-            <label class="filter-label">Type de train :</label>
-            <wcs-radio-group
-              name="train-type-filter"
-              mode="option"
-              [value]="selectedType"
-              (wcsChange)="onTypeChange($event)">
-              <wcs-radio label="Tous" value="ALL"></wcs-radio>
-              <wcs-radio label="TGV INOUI" value="TGV INOUI"></wcs-radio>
-              <wcs-radio label="OUIGO" value="OUIGO"></wcs-radio>
-              <wcs-radio label="TER" value="TER"></wcs-radio>
-            </wcs-radio-group>
-          </div>
+          <div class="filter-row">
+            <div class="input-container">
+              <wcs-form-field>
+                <wcs-label>Rechercher une destination ou un numéro de train :</wcs-label>
+                <wcs-input
+                  icon="search"
+                  placeholder="Ex: Lyon, Bordeaux, TGV 6612..."
+                  [value]="searchTerm"
+                  (wcsInput)="onSearchInput($event)">
+                </wcs-input>
+              </wcs-form-field>
+            </div>
 
-          <div class="actions-group">
-            <wcs-button mode="stroked" shape="round" size="s" (click)="resetFilters()">
-              Réinitialiser
-            </wcs-button>
+            <div class="radio-filter-group">
+              <label class="filter-label">Type de train :</label>
+              <wcs-radio-group
+                name="train-type-filter"
+                mode="option"
+                [value]="selectedType"
+                (wcsChange)="onTypeChange($event)">
+                <wcs-radio label="Tous" value="ALL"></wcs-radio>
+                <wcs-radio label="TGV INOUI" value="TGV INOUI"></wcs-radio>
+                <wcs-radio label="OUIGO" value="OUIGO"></wcs-radio>
+                <wcs-radio label="TER" value="TER"></wcs-radio>
+              </wcs-radio-group>
+            </div>
+
+            <div class="actions-group">
+              <wcs-button mode="stroked" shape="round" size="s" (click)="resetFilters()">
+                Réinitialiser
+              </wcs-button>
+            </div>
           </div>
         </div>
       </wcs-card-body>
@@ -57,16 +59,23 @@ import { TrainService } from '../../services/train.service';
       display: block;
     }
 
+    .filter-card-content {
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
     .filter-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
     }
 
     .filter-header h3 {
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      font-weight: 700;
       color: #1e293b;
     }
 
@@ -77,7 +86,7 @@ import { TrainService } from '../../services/train.service';
     .filter-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 24px;
       align-items: flex-end;
     }
 
@@ -90,7 +99,7 @@ import { TrainService } from '../../services/train.service';
       font-size: 0.85rem;
       font-weight: 500;
       color: #475569;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       display: inline-block;
     }
 
@@ -102,7 +111,7 @@ import { TrainService } from '../../services/train.service';
     .actions-group {
       display: flex;
       align-items: center;
-      padding-bottom: 2px;
+      padding-bottom: 4px;
     }
   `]
 })
