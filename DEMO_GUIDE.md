@@ -8,7 +8,7 @@
 - **Durée totale recommandée** : 20 à 25 minutes (+ 5 min de questions/réponses).
 - **Public cible** : Développeurs front, Tech Leads, Architectes, Managers techniques.
 - **Environnement** : IntelliJ IDEA (avec le plugin officiel *GitHub Copilot* installé et activé).
-- **Projet de départ** : Application Angular (v16, `NgModule`, RxJS avec `BehaviorSubject` et fuites potentielles, Web Components SNCF `@wcs/core`).
+- **Projet de départ** : Application Angular (v16, `NgModule`, RxJS avec `BehaviorSubject` et fuites potentielles, Web Components SNCF `wcs-core`).
 - **Objectifs de la démo** :
   1. Démontrer l'efficacité de Copilot sur des refactorings réels et non triviaux.
   2. Générer un script de mise à jour des dépendances en tenant compte de la matrice de compatibilité (Angular / TypeScript / WCS).
@@ -78,12 +78,12 @@ Montrer la capacité de Copilot à analyser les dépendances dans `package.json`
 
 ### 💬 Prompt à saisir dans Copilot Chat :
 ```text
-Voici le fichier package.json d'une application Angular qui utilise les Web Components SNCF (@wcs/core).
+Voici le fichier package.json d'une application Angular qui utilise les Web Components SNCF (wcs-core).
 Je souhaite faire monter ce projet en version vers la version stable d'Angular 17 (ou 18).
 
 Analyse les dépendances actuelles et génère :
 1. Un script PowerShell et un script Bash automatisé pour effectuer la migration étape par étape (commandes 'ng update' et 'npm install').
-2. La liste des points d'attention (compatibilité TypeScript, Node.js, RxJS et @wcs/core).
+2. La liste des points d'attention (compatibilité TypeScript, Node.js, RxJS et wcs-core).
 3. Les flags recommandés (par exemple --force si nécessaire pour les peer-dependencies).
 ```
 
@@ -102,7 +102,7 @@ npx @angular/cli@17 update @angular/core@17 @angular/cli@17 --allow-dirty
 npm install typescript@~5.2.0 rxjs@~7.8.0
 
 # Conservation / mise à jour des Web Components SNCF
-npm install @wcs/core@latest
+npm install wcs-core@latest
 ```
 
 ---
