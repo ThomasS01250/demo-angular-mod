@@ -1,3 +1,7 @@
+/* Styles & Design Tokens WCS SNCF (Official recommendation) */
+@import "wcs-core/dist/wcs/wcs.css";
+@import "wcs-core/design-tokens/dist/sncf-holding.css";
+
 /* Global styles */
 body {
   margin: 0;

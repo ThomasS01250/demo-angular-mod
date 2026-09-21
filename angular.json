@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "css"
+          "style": "scss"
         }
       },
       "root": "",
@@ -24,14 +24,13 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "node_modules/wcs-core/dist/wcs/wcs.css",
-              "node_modules/wcs-core/design-tokens/dist/sncf-holding.css",
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
