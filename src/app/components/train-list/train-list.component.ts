@@ -24,38 +24,37 @@ import { TrainService } from '../../services/train.service';
         <div class="train-cards-grid">
           <!-- Boucle *ngFor avec pipe async -->
           <div *ngFor="let train of trains$ | async" class="train-item">
-            <wcs-card>
-              <div class="train-card-inner">
-                <div class="card-header">
-                  <div class="train-identity">
-                    <wcs-badge [color]="getBadgeColor(train.type)">{{ train.type }}</wcs-badge>
-                    <span class="train-number">{{ train.trainNumber }}</span>
+            <wcs-card mode="raised">
+              <wcs-card-body>
+                <wcs-card-header>
+                  <div slot="badges">
+                    <wcs-badge shape="rounded" [class]="'badge-type-' + getBadgeSlug(train.type)">
+                      {{ train.type }}
+                    </wcs-badge>
                   </div>
-                  <div class="train-status">
-                    <span *ngIf="train.status === 'ON_TIME'" class="status-badge on-time">À l'heure</span>
-                    <span *ngIf="train.status === 'DELAYED'" class="status-badge delayed">+{{ train.delayMinutes }} min</span>
-                    <span *ngIf="train.status === 'CANCELLED'" class="status-badge cancelled">Supprimé</span>
+                  {{ train.trainNumber }}
+                  <div slot="actions">
+                    <wcs-badge *ngIf="train.status === 'ON_TIME'" shape="rounded" class="status-badge on-time">À l'heure</wcs-badge>
+                    <wcs-badge *ngIf="train.status === 'DELAYED'" shape="rounded" class="status-badge delayed">+{{ train.delayMinutes }} min</wcs-badge>
+                    <wcs-badge *ngIf="train.status === 'CANCELLED'" shape="rounded" class="status-badge cancelled">Supprimé</wcs-badge>
+                  </div>
+                </wcs-card-header>
+
+                <div class="journey-route">
+                  <div class="station departure">
+                    <span class="time">{{ train.departureTime }}</span>
+                    <span class="name">{{ train.departureStation }}</span>
+                  </div>
+                  <div class="journey-divider">
+                    <wcs-divider></wcs-divider>
+                  </div>
+                  <div class="station arrival">
+                    <span class="time">{{ train.arrivalTime }}</span>
+                    <span class="name">{{ train.arrivalStation }}</span>
                   </div>
                 </div>
 
-                <div class="card-body">
-                  <div class="journey-route">
-                    <div class="station departure">
-                      <span class="time">{{ train.departureTime }}</span>
-                      <span class="name">{{ train.departureStation }}</span>
-                    </div>
-                    <div class="journey-divider">
-                      <span class="line"></span>
-                      <span class="dot"></span>
-                    </div>
-                    <div class="station arrival">
-                      <span class="time">{{ train.arrivalTime }}</span>
-                      <span class="name">{{ train.arrivalStation }}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card-footer">
+                <wcs-card-footer>
                   <div class="seats-info">
                     <span [class.text-danger]="train.availableSeats <= 5">
                       {{ train.availableSeats }} place(s) restante(s)
@@ -70,8 +69,8 @@ import { TrainService } from '../../services/train.service';
                       {{ train.availableSeats === 0 ? 'Complet' : 'Réserver' }}
                     </wcs-button>
                   </div>
-                </div>
-              </div>
+                </wcs-card-footer>
+              </wcs-card-body>
             </wcs-card>
           </div>
 
@@ -108,50 +107,34 @@ import { TrainService } from '../../services/train.service';
       gap: 16px;
     }
 
-    .train-card-inner {
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .train-identity {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .train-number {
-      font-weight: 600;
-      color: #334155;
-    }
-
-    .status-badge {
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 4px;
-    }
-
     .status-badge.on-time {
-      background-color: #dcfce7;
-      color: #15803d;
+      --wcs-badge-background-color: #dcfce7;
+      --wcs-badge-color: #15803d;
     }
 
     .status-badge.delayed {
-      background-color: #fef3c7;
-      color: #b45309;
+      --wcs-badge-background-color: #fef3c7;
+      --wcs-badge-color: #b45309;
     }
 
     .status-badge.cancelled {
-      background-color: #fee2e2;
-      color: #b91c1c;
+      --wcs-badge-background-color: #fee2e2;
+      --wcs-badge-color: #b91c1c;
+    }
+
+    .badge-type-tgv-inoui {
+      --wcs-badge-background-color: #7b1fa2;
+      --wcs-badge-color: #ffffff;
+    }
+
+    .badge-type-ouigo {
+      --wcs-badge-background-color: #00a4e4;
+      --wcs-badge-color: #ffffff;
+    }
+
+    .badge-type-ter {
+      --wcs-badge-background-color: #0088ce;
+      --wcs-badge-color: #ffffff;
     }
 
     .journey-route {
@@ -159,8 +142,9 @@ import { TrainService } from '../../services/train.service';
       align-items: center;
       justify-content: space-between;
       background-color: #f8fafc;
-      padding: 16px;
+      padding: 16px 20px;
       border-radius: 8px;
+      margin: 12px 0;
     }
 
     .station {
@@ -181,25 +165,7 @@ import { TrainService } from '../../services/train.service';
 
     .journey-divider {
       flex: 1;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       margin: 0 24px;
-    }
-
-    .journey-divider .line {
-      width: 100%;
-      height: 2px;
-      background-color: #cbd5e1;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid #f1f5f9;
-      padding-top: 12px;
     }
 
     .seats-info {
@@ -253,16 +219,7 @@ export class TrainListComponent implements OnInit {
     this.trainService.refreshTrains();
   }
 
-  getBadgeColor(type: string): string {
-    switch (type) {
-      case 'TGV INOUI':
-        return 'primary';
-      case 'OUIGO':
-        return 'warning';
-      case 'TER':
-        return 'success';
-      default:
-        return 'info';
-    }
+  getBadgeSlug(type: string): string {
+    return type.toLowerCase().replace(/\s+/g, '-');
   }
 }
