@@ -159,17 +159,30 @@ import { TrainService } from '../../services/train.service';
     .station {
       display: flex;
       flex-direction: column;
+      flex: 0 0 200px;
+    }
+
+    .station.departure {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .station.arrival {
+      align-items: flex-end;
+      text-align: right;
     }
 
     .station .time {
       font-size: 1.4rem;
       font-weight: 700;
       color: #0f172a;
+      line-height: 1.2;
     }
 
     .station .name {
       font-size: 0.9rem;
       color: #64748b;
+      margin-top: 4px;
     }
 
     .journey-divider {
